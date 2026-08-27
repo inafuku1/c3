@@ -1,6 +1,6 @@
 FROM node:22
 
-WORKDIR /app
+WORKDIR /var/app
 
 RUN npx create-next-app@latest . \
   --typescript \

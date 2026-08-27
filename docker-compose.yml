@@ -1,32 +1,32 @@
-version: '3.9'
-
 services:
 
   frontend:
+    user: "${HOST_UID}:${HOST_GID}"
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: nextjs
+    container_name: c3-front
     ports:
       - "3000:3000"
     volumes:
-      - ./frontend:/app
-      - /app/node_modules
-      - /app/.next
+      - ./frontend:/var/app
+      - /var/app/node_modules
+      - ./frontend/.next:/var/app/.next
     environment:
       - NEXT_PUBLIC_API_URL=http://localhost:8000/api
     depends_on:
       - backend
 
   backend:
+    user: "${HOST_UID}:${HOST_GID}"
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: laravel
+    container_name: c3-web
     ports:
       - "8000:8000"
     volumes:
-      - ./backend:/var/www/html
+      - ./backend:/var/app
     depends_on:
       - mysql
     environment:
@@ -38,7 +38,7 @@ services:
       - DB_PASSWORD=password
   mysql:
     image: mysql:8.4
-    container_name: mysql
+    container_name: c3-mysql
     restart: always
     ports:
       - "3306:3306"
