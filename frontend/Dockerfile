@@ -12,4 +12,4 @@ RUN npx create-next-app@latest . \
 
 EXPOSE 3000
 
-CMD ["npm","run","dev"]
+CMD ["npm","run","dev:inspect"]

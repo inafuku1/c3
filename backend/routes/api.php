@@ -4,15 +4,24 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('web')->group(function () {
+Route::post(
+    '/login',
+    [AuthController::class, 'login']
+);
 
-    Route::post('/login', [AuthController::class, 'login']);
+Route::middleware('auth:sanctum')
+    ->get('/me', function (Request $request) {
+        return response()->json([
+            'user' => $request->user(),
 
-    Route::middleware('auth:sanctum')->group(function () {
-        Route::get('/me', function () {
-            return auth()->user();
-        });
-
-        Route::post('/logout', [AuthController::class, 'logout']);
+            // デバッグ用
+            'session_id' =>
+                $request->session()->getId(),
+        ]);
     });
-});
+
+Route::middleware('auth:sanctum')
+    ->post(
+        '/logout',
+        [AuthController::class, 'logout']
+    );
