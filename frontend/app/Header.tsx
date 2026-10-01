@@ -62,7 +62,7 @@ export default function Header() {
 
                     <div className="hidden sm:flex sm:items-center sm:ms-6">
                         {loading ? (
-                            <p>認証確認中...</p>
+                            <p></p>
                         ) : user ? (
                             <>
                                 <p>{user.name}</p>
